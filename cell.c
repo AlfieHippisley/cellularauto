@@ -34,6 +34,8 @@ int main(){
 
 	// Given value for number of generations to be done
 	int givenValue = 10;
+	//Variables for binary conversion
+	int n, binaryNum, decimalNum = 0, i = 1, remainder;
 
 	// Make a new line in terminal
 	printf("\n");
@@ -48,6 +50,7 @@ int main(){
 		printf("1. Generate Pattern (Default - Rule 30)\n");
 		printf("2. Change The Generation Settings\n");
 		printf("3. Change rules\n");
+		printf("4. Binary to decimal\n");
 		printf("0. Exit\n");
 
 		// Int choice is the user input
@@ -97,8 +100,8 @@ int main(){
 						// Get value of cell to the left, might be end so check
 						if(index == 0){
 
-							// If end then wrap around
-							a = parentGen[arraySize];
+							// If end then 0
+							c = 0;
 						}
 						else{
 							// Must not be end so treat like normal
@@ -111,8 +114,8 @@ int main(){
 						// Get the value of the cell to the right, might be end so check
 						if (index == currentGenerationSize){
 
-							// If end then wrap around
-							c = parentGen[0];
+							// If end then 0
+							c = 0;
 						}
 						else{
 
@@ -267,6 +270,22 @@ int main(){
 
 			break;
 
+			//Conversion from binary to decimal
+			case 4:
+				
+				printf("Please enter a binary number : ");
+				scanf("%d", &n);
+				binaryNum = n;
+				while (n != 0)
+				{
+					remainder = n%10;
+					n = n/10;
+					decimalNum = decimalNum + remainder * i;
+					++i;
+				}
+				printf("The Binary number is = %d \n", binaryNum);
+				printf("The decimal Number is =  %d \n",decimalNum);
+			break;
 			// Exit Case
 			case 0:
 

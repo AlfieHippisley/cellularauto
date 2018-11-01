@@ -24,10 +24,10 @@ int main(){
 	int programEnd = 0;
 
 	// Parent gen is the old generation of cells that defines the new cells
-	int parentGen[currentGenerationSize];
+	int parentGen[maxGenerationSize];
 
 	// Child gen is the generation of cells that is currently being processed
-	int childGen[currentGenerationSize];
+	int childGen[maxGenerationSize];
 
 	// Given value for number of generations to be done
 	int givenValue = 10;

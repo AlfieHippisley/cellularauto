@@ -14,17 +14,20 @@
 
 int main(){
 
-	// Create two arrays, the size of those arrays is defined by "arraySize"
-	int arraySize = 31;
+	// Max size of generations
+	int maxGenerationSize = 100;
+
+	// Create two arrays, the size of those arrays is defined by "currentGenerationSize", 100 should be wide enough
+	int currentGenerationSize = 31;
 
 	// This is used to tell the while loop to stop
 	int programEnd = 0;
 
 	// Parent gen is the old generation of cells that defines the new cells
-	int parentGen[arraySize];
+	int parentGen[currentGenerationSize];
 
 	// Child gen is the generation of cells that is currently being processed
-	int childGen[arraySize];
+	int childGen[currentGenerationSize];
 
 	// Given value for number of generations to be done
 	int givenValue = 10;
@@ -60,15 +63,20 @@ int main(){
 				memset(parentGen, 0, sizeof(parentGen));
 				memset(childGen, 0, sizeof(childGen));
 
+				// Test divide by 2
+				int test =0; 
+				test = currentGenerationSize/2; 
+				printf("Test is %d\n",test );
+
 				// Place a one (Known as the seed) in the middle of the array (This changes so we need to replace)
-				parentGen[(arraySize/2)] = 1;
+				parentGen[(currentGenerationSize/2)] = 1;
 
 				printf("\n\n-------------------------------------------------------\n");
-				printf("\nGenerating With A Width Of %d, %d times!\n", arraySize, givenValue);
+				printf("\nGenerating With A Width Of %d, %d times!\n", currentGenerationSize, givenValue);
 				printf("\n-------------------------------------------------------\n");
 
 				// Print First Generation has when the first loop starts this will be overwritten
-				for (int i = 0; i < arraySize; ++i){
+				for (int i = 0; i < currentGenerationSize; ++i){
 							printf("%d", parentGen[i]);
 				}
 
@@ -76,7 +84,7 @@ int main(){
 				for(int t = 0; t != givenValue; t++){
 
 					// For each posistion in the child array
-					for(int index = 0; index != arraySize+1; index++){
+					for(int index = 0; index != currentGenerationSize+1; index++){
 
 						// Create varibles to store three cells above
 						int a;
@@ -87,7 +95,7 @@ int main(){
 						if(index == 0){
 
 							// If end then wrap around
-							a = parentGen[arraySize];
+							a = parentGen[currentGenerationSize];
 						}
 						else{
 							// Must not be end so treat like normal
@@ -98,7 +106,7 @@ int main(){
 						b = parentGen[index];
 
 						// Get the value of the cell to the right, might be end so check
-						if (index == arraySize){
+						if (index == currentGenerationSize){
 
 							// If end then wrap around
 							c = parentGen[0];
@@ -156,7 +164,7 @@ int main(){
 					}
 
 					// Fill the parent array with the new generation
-					for (int i = 0; i < arraySize; ++i){
+					for (int i = 0; i < currentGenerationSize; ++i){
 							parentGen[i] = childGen[i];
 					}
 
@@ -164,7 +172,7 @@ int main(){
 					printf("\n");
 
 					// Print the parentGen array
-					for (int i = 0; i < arraySize; ++i){
+					for (int i = 0; i < currentGenerationSize; ++i){
 							printf("%d", parentGen[i]);
 					}
 				}
@@ -182,7 +190,7 @@ int main(){
 				printf("How wide do you want the generation to be?\n");
 
 				// Get the user input
-				scanf("%d", &arraySize);
+				scanf("%d", &currentGenerationSize);
 
 				// Ask the user how many lines they wanted generated
 				printf("How many lines do you want generated?\n");

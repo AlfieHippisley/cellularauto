@@ -97,8 +97,8 @@ int main(){
 						// Get value of cell to the left, might be end so check
 						if(index == 0){
 
-							// If end then wrap around
-							a = parentGen[currentGenerationSize];
+							// If end then 0
+							c = 0;
 						}
 						else{
 							// Must not be end so treat like normal
@@ -111,8 +111,8 @@ int main(){
 						// Get the value of the cell to the right, might be end so check
 						if (index == currentGenerationSize){
 
-							// If end then wrap around
-							c = parentGen[0];
+							// If end then 0
+							c = 0;
 						}
 						else{
 

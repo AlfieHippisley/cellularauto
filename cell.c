@@ -15,7 +15,10 @@
 int main(){
 
 	// Max size of generations
-	int maxGenerationSize = 100;
+	int maxGenerationSize = 150;
+
+	// Min size of generations
+	int minGenerationSize = 5;
 
 	// Create two arrays, the size of those arrays is defined by "currentGenerationSize", 100 should be wide enough
 	int currentGenerationSize = 31;
@@ -183,18 +186,79 @@ int main(){
 			case 2:
 
 				printf("\n-------------------------------------------------------\n");
-				printf("\nWhat Generation Settings Would You Like To Change?\n");
+				printf("\nChange Generation Settings\n");
 				printf("\n-------------------------------------------------------\n");
-				
-				// Ask user how wide they want the generation to be.
-				printf("How wide do you want the generation to be?\n");
 
-				// Get the user input
-				scanf("%d", &currentGenerationSize);
+				int userInput;
+				int valid;
 
-				// Ask the user how many lines they wanted generated
-				printf("How many lines do you want generated?\n");
-				scanf("%d", &givenValue);
+				valid =0;
+
+				while(valid == 0){
+
+					// Ask user how wide they want the generation to be.
+					printf("How wide do you want the generation to be?\n");
+
+					// Get the user input
+					scanf("%d", &userInput);
+
+					// If user input is invalid then do this
+					if (userInput > maxGenerationSize || userInput <minGenerationSize){
+
+						printf("\n-------------------------------------------------------\n\n");
+						printf("Invalid Input - Max Width Is 150 cells, Min is 5.\n");
+						printf("Try Again!\n");
+						printf("\n-------------------------------------------------------\n");
+
+					} else if(userInput <=maxGenerationSize && userInput >= minGenerationSize){
+
+						valid = 1;
+
+						currentGenerationSize = userInput;
+
+					} else{
+
+						printf("\n-------------------------------------------------------\n\n");
+						printf("Something went really wrong, Sorry\n");
+						printf("\n-------------------------------------------------------\n");
+
+						programEnd =1;
+					}
+				}
+
+				valid =0;
+
+				while(valid ==0){
+
+					// Ask the user how many lines they wanted generated
+					printf("How many lines do you want generated?\n");
+
+					// Get the user input
+					scanf("%d", &userInput);
+
+					// If user input is invalid then do this
+					if (userInput > maxGenerationSize || userInput <minGenerationSize){
+
+						printf("\n-------------------------------------------------------\n\n");
+						printf("Invalid Input - Max generated Is 150 lines, Min is 5.\n");
+						printf("Try Again!\n");
+						printf("\n-------------------------------------------------------\n");
+
+					} else if(userInput <=maxGenerationSize && userInput >= minGenerationSize){
+
+						valid = 1;
+
+						givenValue = userInput;
+
+					} else{
+
+						printf("\n-------------------------------------------------------\n\n");
+						printf("Something went really wrong, Sorry\n");
+						printf("\n-------------------------------------------------------\n");
+
+						programEnd =1;
+					}
+				}
 
 			break;
 
@@ -210,6 +274,9 @@ int main(){
 				programEnd = 1;	
 
 			break;
+
+			default:
+				printf("Invalid Input - Please Enter Valid Number\n");
 		}
 	}
 }

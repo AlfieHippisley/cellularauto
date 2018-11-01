@@ -14,7 +14,23 @@
 
 int main(){
 
-	// For this to work we will need to use predefined rules (This is not working yet)
+
+	//menu
+	printf("--Menu--\n");
+	printf("Please chose one of the following options\n");
+	printf("1. Run with preset settings\n");
+	printf("2. Change set size and its values\n");
+	printf("3. Change rules\n");
+	printf("0. Exit\n");
+
+	int choice;
+	scanf("%d", &choice);
+
+	switch(choice)
+	{
+		case 1:
+		printf("1 option selected\n");
+		// For this to work we will need to use predefined rules (This is not working yet)
 	int ruleThirty[8] = {0,0,0,1,1,1,1,0};
 
 	// Create two arrays, the size of those arrays is defined by "arraySize"
@@ -141,4 +157,20 @@ int main(){
 	}
 
 	printf("\n\n");
+
+		break;
+		case 2:
+		printf("2 option selected\n");
+		break;
+		case 3:
+		printf("3 option selected\n");
+		break;
+		case 0:
+		printf("Exist\n");
+		void exit (int status);	
+		break;
+	}
+
+
+	
 }

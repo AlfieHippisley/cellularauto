@@ -13,183 +13,195 @@
 #include <string.h>
 
 int main(){
-		//a is the parent set which is used to find the new set
-		int a[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-		// For this to work we will need to use predefined rules (This is not working yet)
-		int ruleThirty[8] = {0,0,0,1,1,1,1,0};
+	// Create two arrays, the size of those arrays is defined by "arraySize"
+	int arraySize = 31;
 
-		// Create two arrays, the size of those arrays is defined by "arraySize"
-		int arraySize = 31;
+	// This is used to tell the while loop to stop
+	int programEnd = 0;
 
-		// Parent gen is the old generation of cells that defines the new cells
-		int parentGen[arraySize];
+	// Parent gen is the old generation of cells that defines the new cells
+	int parentGen[arraySize];
 
-		// Child gen is the generation of cells that is currently being processed
-		int childGen[arraySize];
+	// Child gen is the generation of cells that is currently being processed
+	int childGen[arraySize];
 
-		// This fills the arrays with zeros
-		memset(parentGen, 0, sizeof(parentGen));
-		memset(childGen, 0, sizeof(childGen));
+	// Given value for number of generations to be done
+	int givenValue = 10;
 
-		// Place a one (Known as a seed) in the middle of the array
-		parentGen[(arraySize/2)] = 1;
+	// Make a new line in terminal
+	printf("\n");
 
-		// Make a new line in terminal
-		printf("\n");
+	while(programEnd == 0){
 
-		// Given value for number of generations
-		int givenValue = 10;
+		// Display the user menu
 
-		//Loop to keep runing the program until user chooses to exit
-	   int programEnd = 0;
-	while(programEnd == 0) {
-		//menu
-		printf("--Menu--\n");
-		printf("Please chose one of the following options\n");
-		printf("1. Run with pre-set settings\n");
-		printf("2. Change set size and its values\n");
+		printf("\n-------------------------------------------------------\n\n");
+		printf("Main Menu - Please chose one of the following options\n");
+		printf("\n-------------------------------------------------------\n");
+		printf("1. Generate Pattern (Default - Rule 30)\n");
+		printf("2. Change The Generation Settings\n");
 		printf("3. Change rules\n");
 		printf("0. Exit\n");
 
+		// Int choice is the user input
 		int choice;
+
+		// Get the user input
 		scanf("%d", &choice);
 
-		switch(choice)
-		{
+		// Switch For Choosing What To Run
+		switch(choice){
+
+			// Run the generation
 			case 1:
-			printf("1 option selected\n");
-			
-			// Print First Generation has when the first loop starts this will be overwritten
-			for (int i = 0; i < arraySize; ++i){
-						printf("%d", parentGen[i]);
-			}
-			// Loop until t (time) equals a given value
-			for(int t = 0; t != givenValue; t++){
 
-				// For each posistion in the child array
-				for(int index = 0; index != arraySize+1; index++){
+				// This fills the arrays with zeros
+				memset(parentGen, 0, sizeof(parentGen));
+				memset(childGen, 0, sizeof(childGen));
 
-					// Create varibles to store three cells above
-					int a;
-					int b;
-					int c;
+				// Place a one (Known as the seed) in the middle of the array (This changes so we need to replace)
+				parentGen[(arraySize/2)] = 1;
 
-					// Get value of cell to the left, might be end so check
-					if(index == 0){
+				printf("\n\n-------------------------------------------------------\n");
+				printf("\nGenerating With A Width Of %d, %d times!\n", arraySize, givenValue);
+				printf("\n-------------------------------------------------------\n");
 
-						// If end then wrap around
-						a = parentGen[arraySize];
-					}
-					else{
-						// Must not be end so treat like normal
-						a = parentGen[(index-1)];
-					}
-
-					// Get the value of the cell above, this is simple
-					b = parentGen[index];
-
-					// Get the value of the cell to the right, might be end so check
-					if (index == arraySize){
-
-						// If end then wrap around
-						c = parentGen[0];
-					}
-					else{
-
-						// Must not be end so treat like normal
-						c = parentGen[(index +1)];
-					}
-
-					// Place rule here (In this case its rule 30 hard coded)
-					// The line below is for debugging
-					//printf("(A is currently - %d, B is currently - %d, C is currently - %d)\n",a,b,c);
-
-					if (a == 1 && b == 1 && c == 1)
-					{
-						childGen[index] = 0;
-					}
-
-					else if(a == 1 && b == 1 && c == 0)
-					{
-						childGen[index] = 0;
-					}
-
-					else if(a == 1 && b == 0 && c == 1)
-					{
-						childGen[index] = 0;
-					}
-
-					else if(a == 1 && b == 0 && c == 0)
-					{
-						childGen[index] = 1;
-					}
-
-					else if(a == 0 && b == 1 && c == 1)
-					{
-						childGen[index] = 1;
-					}
-
-					else if(a == 0 && b == 1 && c == 0)
-					{
-						childGen[index] = 1;
-					}
-
-					else if(a == 0 && b == 0 && c == 1)
-					{
-						childGen[index] = 1;
-					}
-
-					else if(a == 0 && b == 0 && c == 0)
-					{
-						childGen[index] = 0;
-					}
-				}
-
-				// Fill the parent array with the new generation
+				// Print First Generation has when the first loop starts this will be overwritten
 				for (int i = 0; i < arraySize; ++i){
-						parentGen[i] = childGen[i];
+							printf("%d", parentGen[i]);
 				}
 
-				// Take a new line in terminal
-				printf("\n");
+				// Loop until t (time) equals a given value
+				for(int t = 0; t != givenValue; t++){
 
-				// Print the parentGen array
-				for (int i = 0; i < arraySize; ++i){
-						printf("%d", parentGen[i]);
+					// For each posistion in the child array
+					for(int index = 0; index != arraySize+1; index++){
+
+						// Create varibles to store three cells above
+						int a;
+						int b;
+						int c;
+
+						// Get value of cell to the left, might be end so check
+						if(index == 0){
+
+							// If end then wrap around
+							a = parentGen[arraySize];
+						}
+						else{
+							// Must not be end so treat like normal
+							a = parentGen[(index-1)];
+						}
+
+						// Get the value of the cell above, this is simple
+						b = parentGen[index];
+
+						// Get the value of the cell to the right, might be end so check
+						if (index == arraySize){
+
+							// If end then wrap around
+							c = parentGen[0];
+						}
+						else{
+
+							// Must not be end so treat like normal
+							c = parentGen[(index +1)];
+						}
+
+						// Place rule here (In this case its rule 30 hard coded)
+						
+						// The line below is for debugging
+						//printf("(A is currently - %d, B is currently - %d, C is currently - %d)\n",a,b,c);
+
+						if (a == 1 && b == 1 && c == 1)
+						{
+							childGen[index] = 0;
+						}
+
+						else if(a == 1 && b == 1 && c == 0)
+						{
+							childGen[index] = 0;
+						}
+
+						else if(a == 1 && b == 0 && c == 1)
+						{
+							childGen[index] = 0;
+						}
+
+						else if(a == 1 && b == 0 && c == 0)
+						{
+							childGen[index] = 1;
+						}
+
+						else if(a == 0 && b == 1 && c == 1)
+						{
+							childGen[index] = 1;
+						}
+
+						else if(a == 0 && b == 1 && c == 0)
+						{
+							childGen[index] = 1;
+						}
+
+						else if(a == 0 && b == 0 && c == 1)
+						{
+							childGen[index] = 1;
+						}
+
+						else if(a == 0 && b == 0 && c == 0)
+						{
+							childGen[index] = 0;
+						}
+					}
+
+					// Fill the parent array with the new generation
+					for (int i = 0; i < arraySize; ++i){
+							parentGen[i] = childGen[i];
+					}
+
+					// Take a new line in terminal
+					printf("\n");
+
+					// Print the parentGen array
+					for (int i = 0; i < arraySize; ++i){
+							printf("%d", parentGen[i]);
+					}
 				}
-			}
-
-			printf("\n\n");
 
 			break;
+
+			// Case 2- Change generation settings
 			case 2:
-			printf("2 option selected\n");
-			//change the size
-			printf("Please enter the new size of the set\n");
-			scanf("%d" , &arraySize);
-			printf("Please enter new values of the set one at a time, 0 or 1.\n");
-			for (int vSet =0; vSet<arraySize; vSet++)
-			{
-				int values;
-				scanf("%d" , &values);
-				if (values !=1 && values !=0)
-				{ 
-					printf("Incorrect input, Please type in 1 or 0\n");
-					scanf("%d", &values);
-				}
-				a[vSet] = values;
-			}
+
+				printf("\n-------------------------------------------------------\n");
+				printf("\nWhat Generation Settings Would You Like To Change?\n");
+				printf("\n-------------------------------------------------------\n");
+				
+				// Ask user how wide they want the generation to be.
+				printf("How wide do you want the generation to be?\n");
+
+				// Get the user input
+				scanf("%d", &arraySize);
+
+				// Ask the user how many lines they wanted generated
+				printf("How many lines do you want generated?\n");
+				scanf("%d", &givenValue);
+
 			break;
+
+			// Case 3 - Currently Empty
 			case 3:
-			printf("3 option selected\n");
+
 			break;
+
+			// Exit Case
 			case 0:
-			printf("Exit\n");
-			programEnd = 1;	
+
+				printf("Exit\n");
+				programEnd = 1;	
+
 			break;
 		}
-
 	}
-	
 }

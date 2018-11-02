@@ -39,7 +39,12 @@ int main(){
 	int n, binaryNum, decimalNum = 0, i = 1, remainder;
 
 	// Seedpos is the position of the seed (Can be defined by user, defaults to middle of generation)
-	int seedPos = maxGenerationSize/2;
+	int seedPos = currentGenerationSize/2;
+
+	// Default to rule 30
+	int activeRuleSet[8] = {0,0,0,1,1,1,1,0};
+
+	int valid =0;
 
 	// Make a new line in terminal
 	printf("\n");
@@ -72,6 +77,8 @@ int main(){
 				// This fills the arrays with zeros
 				memset(parentGen, 0, sizeof(parentGen));
 				memset(childGen, 0, sizeof(childGen));
+
+				printf("Seadpos = %d\n", seedPos);
 
 				// Place a one (Known as the seed) in the middle of the array (This changes so we need to replace)
 				parentGen[seedPos] = 1;
@@ -128,43 +135,43 @@ int main(){
 						//printf("(A is currently - %d, B is currently - %d, C is currently - %d)\n",a,b,c);
 
 						if (a == 1 && b == 1 && c == 1)
-						{
-							childGen[index] = 0;
-						}
+						{	
+							childGen[index] = activeRuleSet[0];
+						}	
 
 						else if(a == 1 && b == 1 && c == 0)
 						{
-							childGen[index] = 0;
+							childGen[index] = activeRuleSet[1];
 						}
 
 						else if(a == 1 && b == 0 && c == 1)
 						{
-							childGen[index] = 0;
+							childGen[index] = activeRuleSet[2];
 						}
 
 						else if(a == 1 && b == 0 && c == 0)
 						{
-							childGen[index] = 1;
+							childGen[index] = activeRuleSet[3];
 						}
 
 						else if(a == 0 && b == 1 && c == 1)
 						{
-							childGen[index] = 1;
+							childGen[index] = activeRuleSet[4];
 						}
 
 						else if(a == 0 && b == 1 && c == 0)
 						{
-							childGen[index] = 1;
+							childGen[index] = activeRuleSet[5];
 						}
 
 						else if(a == 0 && b == 0 && c == 1)
 						{
-							childGen[index] = 1;
+							childGen[index] = activeRuleSet[6];
 						}
 
 						else if(a == 0 && b == 0 && c == 0)
 						{
-							childGen[index] = 0;
+							childGen[index] = activeRuleSet[7];
 						}
 					}
 
@@ -187,100 +194,102 @@ int main(){
 			// Case 2- Change generation settings
 			case 2:
 
-				printf("\n-------------------------------------------------------\n");
-				printf("\nChange Generation Settings\n");
-				printf("\n-------------------------------------------------------\n");
-
-				int userInput;
-				int valid;
-
-				valid =0;
+				valid = 0;
 
 				while(valid == 0){
 
-					// Ask user how wide they want the generation to be.
-					printf("How wide do you want the generation to be  (For Example - 31):\n");
+					int userInput = 0;
 
-					// Get the user input
-					scanf("%d", &userInput);
-
-					// If user input is invalid then do this
-					if (userInput > maxGenerationSize || userInput <minGenerationSize){
-
-						printf("\n-------------------------------------------------------\n\n");
-						printf("Invalid Input - Max Width Is 150 cells, Min is 5.\n");
-						printf("Try Again!\n");
-						printf("\n-------------------------------------------------------\n");
-
-					} else if(userInput <=maxGenerationSize && userInput >= minGenerationSize){
-
-						valid = 1;
-
-						currentGenerationSize = userInput;
-
-					} else{
-
-						printf("\n-------------------------------------------------------\n\n");
-						printf("Something went really wrong, Sorry\n");
-						printf("\n-------------------------------------------------------\n");
-
-						programEnd =1;
-					}
-				}
-
-				valid =0;
-
-				while(valid ==0){
-
-					// Ask the user how many lines they wanted generated
-					printf("How many lines do you want generated (For Example - 31):\n");
-
-					// Get the user input
-					scanf("%d", &userInput);
-
-					// If user input is invalid then do this
-					if (userInput > maxGenerationSize || userInput <minGenerationSize){
-
-						printf("\n-------------------------------------------------------\n\n");
-						printf("Invalid Input - Max generated Is 150 lines, Min is 5.\n");
-						printf("Try Again!\n");
-						printf("\n-------------------------------------------------------\n");
-
-					} else if(userInput <=maxGenerationSize && userInput >= minGenerationSize){
-
-						valid = 1;
-
-						noOfGen = userInput;
-
-					} else{
-
-						printf("\n-------------------------------------------------------\n\n");
-						printf("Something went really wrong, Sorry\n");
-						printf("\n-------------------------------------------------------\n");
-
-						programEnd =1;
-					}
-				}
-
-				valid =0;
-
-				while(valid ==0){
-
-					// Ask the user if they want to change the position of the seed
 					printf("\n-------------------------------------------------------\n");
-					printf("\nDo you want to change the position of the seed?\n");
-					printf("\n-------------------------------------------------------\n\n");
-					printf("1. Yes I want to change the position\n");
-					printf("2. No keep it in the middle of the generation\n");
+					printf("\nChange Generation Settings\n");
+					printf("\n-------------------------------------------------------\n");
+					printf("1. Change Generation Width\n");
+					printf("2. Change Number Of Generations\n");
+					printf("3. Change Seed Position\n");
+					printf("4. Change Rule Set, Or Create Custom\n");
+					printf("0. Return To Main Menu\n");
 
 					// Get the user input
 					scanf("%d", &userInput);
 
+					// Get user input
 					switch(userInput){
 
-						// Change seed pos
+						// Case 1 - Change Width Of Generation
 						case 1:
-							
+
+							// Ask user how wide they want the generation to be.
+							printf("How wide do you want the generation to be  (For Example - 31):\n");
+
+							// Get the user input
+							scanf("%d", &userInput);
+
+							// If user input is invalid then do this
+							if (userInput > maxGenerationSize || userInput <minGenerationSize){
+
+								printf("\n-------------------------------------------------------\n\n");
+								printf("Invalid Input - Max Width Is 150 cells, Min is 5.\n");
+								printf("Try Again!\n");
+								printf("\n-------------------------------------------------------\n");
+
+							} else if(userInput <=maxGenerationSize && userInput >= minGenerationSize){
+
+
+								printf("\n-------------------------------------------------------\n\n");
+								printf("\nYou have changed the width of the generation.\n");
+								printf("The old seed position is now out of place.\n");
+								printf("The seed has been returned to the middle\n");
+
+								currentGenerationSize = userInput;
+
+								seedPos = currentGenerationSize/2;
+
+							} else{
+
+								printf("\n-------------------------------------------------------\n\n");
+								printf("Something went really wrong, Sorry\n");
+								printf("\n-------------------------------------------------------\n");
+
+								programEnd =1;
+							}
+
+						break;
+
+						// Case 2 - Change Number Of Generations
+						case 2:
+
+							// Ask the user how many lines they wanted generated
+							printf("How many lines do you want generated (For Example - 31):\n");
+
+							// Get the user input
+							scanf("%d", &userInput);
+
+							// If user input is invalid then do this
+							if (userInput > maxGenerationSize || userInput <minGenerationSize){
+
+								printf("\n-------------------------------------------------------\n\n");
+								printf("Invalid Input - Max generated Is 150 lines, Min is 5.\n");
+								printf("Try Again!\n");
+								printf("\n-------------------------------------------------------\n");
+
+							} else if(userInput <=maxGenerationSize && userInput >= minGenerationSize){
+
+								noOfGen = userInput;
+
+							} else{
+
+								printf("\n-------------------------------------------------------\n\n");
+								printf("Something went really wrong, Sorry\n");
+								printf("\n-------------------------------------------------------\n");
+
+								programEnd =1;
+							}
+
+						break;
+
+						// Case 3 - Change Seed Pos
+						case 3:
+
 							// Ask user
 							printf("\nEnter the position you would like to place the seed at :\n");
 							
@@ -297,8 +306,6 @@ int main(){
 
 							} else if(userInput <= maxGenerationSize && userInput >= 0){
 
-								valid = 1;
-
 								seedPos = userInput;
 
 							} else{
@@ -312,12 +319,11 @@ int main(){
 
 						break;
 
-						case 2:
-							printf("\n Not Changed Seed Position\n");
-
+						// Return to menu
+						case 0:
 							valid = 1;
 						break;
-
+						
 						default:
 							printf("Invalid Input - Please Enter Valid Number\n");
 
@@ -353,6 +359,8 @@ int main(){
 				printf("The decimal Number is =  %d \n",decimalNum);
 
 			break;
+
+
 			// Exit Case
 			case 0:
 

@@ -58,8 +58,7 @@ int main(){
 		printf("\n-------------------------------------------------------\n");
 		printf("1. Generate Pattern (Default - Rule 30)\n");
 		printf("2. Change The Generation Settings\n");
-		printf("3. Change rules\n");
-		printf("4. Binary to decimal\n");
+		printf("3. Binary to decimal or Decimal to binary\n");
 		printf("0. Exit\n");
 
 		// Int choice is the user input
@@ -332,31 +331,55 @@ int main(){
 
 			break;
 
-			// Case 3 - Currently Empty
-			case 3:
-
-			break;
-
 			//Conversion from binary to decimal
-			case 4:
+			case 3:
 				
-				// Get user input
-				printf("Please enter a binary number : ");
+				printf("Please type 0 if you would like to convert binary to decimal 					or type 1 to convert decimal to binary");
+			//User input
+			scanf("%d", &choice);
+			if (choice == 0)
+			{
+				printf("Please type in a binary number : ");
 				scanf("%d", &n);
-
-				// Set binary num to n which is user input,
 				binaryNum = n;
-				
-				while (n != 0)
+				while (n > 0)
 				{
-					remainder = n%10;
+					remainder = n % 10;
+					
+					decimalNum = decimalNum + remainder *i;
 					n = n/10;
-					decimalNum = decimalNum + remainder * i;
-					++i;
+					i = i * 2;
 				}
-
 				printf("The Binary number is = %d \n", binaryNum);
 				printf("The decimal Number is =  %d \n",decimalNum);
+				n, binaryNum, decimalNum = 0, i = 1, remainder;
+			}
+			//This function is to convert decimals to binary numbers
+			else if (choice == 1)
+			{	
+				//Array to store binay numbers and declaring other variables
+				int a[10],n, i;	
+				printf("Please type in a decimal number\n");
+				//userInput
+				scanf("%d", &n);
+				for (i = 0; n > 0; i++)
+				{
+					a[i] = n % 2;
+					n = n/2;
+				}
+				printf("\n The Binary Number is = \n");
+				for (i=i-1; i>=0; i--)
+				{
+					printf("%d",a[i]);
+				}
+				return 0;
+					
+				
+			}
+			else
+			{
+				printf("Invalid input, please try again.");		
+			}
 
 			break;
 

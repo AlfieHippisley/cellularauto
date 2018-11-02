@@ -333,6 +333,7 @@ int main(){
 			break;
 
 			//Conversion from binary to decimal
+			//ref. This part of code was inspired by following website: https://www.geeksforgeeks.org/program-decimal-binary-conversion/
 			case 3:
 				
 				printf("Please type 0 if you would like to convert binary to decimal 					or type 1 to convert decimal to binary");

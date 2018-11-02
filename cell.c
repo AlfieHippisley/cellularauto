@@ -6,7 +6,8 @@
 //
 // Purpose : Code to form the celluar automaton for assignment 2
 //
-// References : This code made use of the reference material on myDundee, no other sources were used
+// References : This code made use of the reference material on myDundee, and from following website: https://www.geeksforgeeks.org/program-decimal-binary-conversion/
+
 
 #include <stdlib.h>
 #include <stdio.h>

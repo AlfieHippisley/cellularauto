@@ -33,9 +33,13 @@ int main(){
 	int childGen[maxGenerationSize];
 
 	// Given value for number of generations to be done
-	int givenValue = 10;
-	//Variables for binary conversion
+	int noOfGen = 10;
+	
+	// Variables for binary conversion
 	int n, binaryNum, decimalNum = 0, i = 1, remainder;
+
+	// Seedpos is the position of the seed (Can be defined by user, defaults to middle of generation)
+	int seedPos = maxGenerationSize/2;
 
 	// Make a new line in terminal
 	printf("\n");
@@ -69,16 +73,11 @@ int main(){
 				memset(parentGen, 0, sizeof(parentGen));
 				memset(childGen, 0, sizeof(childGen));
 
-				// Test divide by 2
-				int test =0; 
-				test = currentGenerationSize/2; 
-				printf("Test is %d\n",test );
-
 				// Place a one (Known as the seed) in the middle of the array (This changes so we need to replace)
-				parentGen[(currentGenerationSize/2)] = 1;
+				parentGen[seedPos] = 1;
 
 				printf("\n\n-------------------------------------------------------\n");
-				printf("\nGenerating With A Width Of %d, %d times!\n", currentGenerationSize, givenValue);
+				printf("\nGenerating With A Width Of %d, %d times!\n", currentGenerationSize, noOfGen);
 				printf("\n-------------------------------------------------------\n");
 
 				// Print First Generation has when the first loop starts this will be overwritten
@@ -87,9 +86,9 @@ int main(){
 				}
 
 				// Loop until t (time) equals a given value
-				for(int t = 0; t != givenValue; t++){
+				for(int t = 0; t != noOfGen; t++){
 
-					// For each posistion in the child array
+					// For each position in the child array
 					for(int index = 0; index != currentGenerationSize+1; index++){
 
 						// Create varibles to store three cells above
@@ -200,7 +199,7 @@ int main(){
 				while(valid == 0){
 
 					// Ask user how wide they want the generation to be.
-					printf("How wide do you want the generation to be?\n");
+					printf("How wide do you want the generation to be  (For Example - 31):\n");
 
 					// Get the user input
 					scanf("%d", &userInput);
@@ -234,7 +233,7 @@ int main(){
 				while(valid ==0){
 
 					// Ask the user how many lines they wanted generated
-					printf("How many lines do you want generated?\n");
+					printf("How many lines do you want generated (For Example - 31):\n");
 
 					// Get the user input
 					scanf("%d", &userInput);
@@ -251,7 +250,7 @@ int main(){
 
 						valid = 1;
 
-						givenValue = userInput;
+						noOfGen = userInput;
 
 					} else{
 
@@ -260,6 +259,68 @@ int main(){
 						printf("\n-------------------------------------------------------\n");
 
 						programEnd =1;
+					}
+				}
+
+				valid =0;
+
+				while(valid ==0){
+
+					// Ask the user if they want to change the position of the seed
+					printf("\n-------------------------------------------------------\n");
+					printf("\nDo you want to change the position of the seed?\n");
+					printf("\n-------------------------------------------------------\n\n");
+					printf("1. Yes I want to change the position\n");
+					printf("2. No keep it in the middle of the generation\n");
+
+					// Get the user input
+					scanf("%d", &userInput);
+
+					switch(userInput){
+
+						// Change seed pos
+						case 1:
+							
+							// Ask user
+							printf("\nEnter the position you would like to place the seed at :\n");
+							
+							// Get the user input
+							scanf("%d", &userInput);
+
+							// If user input is invalid then do this
+							if (userInput > maxGenerationSize || userInput < 0){
+
+								printf("\n-------------------------------------------------------\n\n");
+								printf("Invalid Input - Max seed position is %d as the generation is only %d wide, Min is 0.\n", maxGenerationSize, maxGenerationSize);
+								printf("Try Again!\n");
+								printf("\n-------------------------------------------------------\n");
+
+							} else if(userInput <= maxGenerationSize && userInput >= 0){
+
+								valid = 1;
+
+								seedPos = userInput;
+
+							} else{
+
+								printf("\n-------------------------------------------------------\n\n");
+								printf("Something went really wrong, Sorry\n");
+								printf("\n-------------------------------------------------------\n");
+
+								programEnd =1;
+							}
+
+						break;
+
+						case 2:
+							printf("\n Not Changed Seed Position\n");
+
+							valid = 1;
+						break;
+
+						default:
+							printf("Invalid Input - Please Enter Valid Number\n");
+
 					}
 				}
 
@@ -273,9 +334,13 @@ int main(){
 			//Conversion from binary to decimal
 			case 4:
 				
+				// Get user input
 				printf("Please enter a binary number : ");
 				scanf("%d", &n);
+
+				// Set binary num to n which is user input,
 				binaryNum = n;
+				
 				while (n != 0)
 				{
 					remainder = n%10;
@@ -283,8 +348,10 @@ int main(){
 					decimalNum = decimalNum + remainder * i;
 					++i;
 				}
+
 				printf("The Binary number is = %d \n", binaryNum);
 				printf("The decimal Number is =  %d \n",decimalNum);
+
 			break;
 			// Exit Case
 			case 0:
